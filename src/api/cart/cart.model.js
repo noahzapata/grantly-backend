@@ -20,6 +20,11 @@ const cartSchema = new Schema(
       required: false,
       default: false,
     },
+    totalPrice: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
   {
     timestamps: true,

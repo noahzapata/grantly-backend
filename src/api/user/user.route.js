@@ -1,5 +1,4 @@
 const Router = require('express');
-
 const { signUpHandler, signInHandler } = require('./user.controller');
 const router = Router();
 
