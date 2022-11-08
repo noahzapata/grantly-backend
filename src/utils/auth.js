@@ -6,6 +6,7 @@ exports.auth = (req, res, next) => {
   if (!authorization) {
     return res.status(401).json({ error: 'Access-denied' });
   }
+  // eslint-disable-next-line no-unused-vars
   const [_, token] = authorization.split(' ');
 
   if (!token) {
