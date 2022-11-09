@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('./user.model');
 const { signUp, signIn, listOfUsers } = require('./user.service');
+const { transporter, welcome } = require('../../utils/mailer');
 
 const signUpHandler = async (req, res) => {
   const userData = req.body;
@@ -19,6 +20,7 @@ const signUpHandler = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
       expiresIn: 60 * 60 * 24,
     });
+    await transporter.sendMail(welcome(user));
     return res
       .status(201)
       .json({ message: 'User created successfully', data: { user, token } });
