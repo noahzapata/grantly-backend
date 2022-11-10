@@ -1,7 +1,16 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('./user.model');
-const { signUp, signIn, listOfUsers } = require('./user.service');
+const {
+  signUp,
+  signIn,
+  oneUser,
+  listOfUsers,
+  updatePhotoUser,
+  deleteUser,
+  findProducts,
+  findFavs,
+} = require('./user.service');
 const { transporter, welcome } = require('../../utils/mailer');
 
 const signUpHandler = async (req, res) => {
@@ -54,7 +63,7 @@ const signInHandler = async (req, res) => {
   }
 };
 
-const listOfUsersHandler = async (req, res) => {
+const list = async (req, res) => {
   try {
     const user = await listOfUsers();
     res.status(200).json({ message: 'users found', data: user });
@@ -65,4 +74,66 @@ const listOfUsersHandler = async (req, res) => {
   }
 };
 
-module.exports = { signUpHandler, signInHandler, listOfUsersHandler };
+async function show(req, res) {
+  const userId = req.user;
+  try {
+    const user = await oneUser(userId);
+    return res.status(200).json({ message: 'User found', data: user });
+  } catch (err) {
+    return res.status(400).json({ message: 'User not found', data: err });
+  }
+}
+
+async function update(req, res) {
+  const userData = req.body;
+  try {
+    const userUdated = await updatePhotoUser(userData);
+    return res.status(200).json({ message: 'User updated', data: userUdated });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ message: 'User could not been update', data: err });
+  }
+}
+
+async function destroy(req, res) {
+  const { userId } = req.params;
+  try {
+    const userDeleted = await deleteUser(userId);
+    return res.status(200).json({ message: 'User deleted', data: userDeleted });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ message: 'User could no be deleted', data: err });
+  }
+}
+
+const findUserProducts = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await findProducts(email);
+    return res.status(200).json({ message: 'User flights found', data: user });
+  } catch (err) {
+    return res.status(400).json({ message: 'User not found', data: err });
+  }
+};
+const findUserFavs = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await findFavs(email);
+    return res.status(200).json({ message: 'User flights found', data: user });
+  } catch (err) {
+    return res.status(400).json({ message: 'User not found', data: err });
+  }
+};
+
+module.exports = {
+  signUpHandler,
+  signInHandler,
+  list,
+  show,
+  update,
+  destroy,
+  findUserProducts,
+  findUserFavs,
+};
