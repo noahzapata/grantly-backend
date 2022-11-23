@@ -5,7 +5,7 @@ const routesConfig = require('./routes.config');
 const expressConfig = require('./express');
 const { transporter, verify } = require('./utils/mailer');
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 const app = express();
 const NODE_ENV = process.env.NODE_ENV;
 
