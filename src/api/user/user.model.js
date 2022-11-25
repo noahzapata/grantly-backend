@@ -15,7 +15,7 @@ const userSchema = new Schema(
       required: true,
     },
     mobile: {
-      type: Object,
+      type: String,
       required: true,
     },
     birthdate: {
