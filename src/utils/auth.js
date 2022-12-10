@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     }
     // eslint-disable-next-line no-unused-vars
     const [_, token] = authorization.split(' ');
-
+    console.log(token);
     if (!token) {
       throw new Error('The sesion has expired by token');
     }
@@ -17,7 +17,7 @@ const auth = async (req, res, next) => {
     req.user = id;
     const user = await User.findById(req.user);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      throw new Error('ID does not exist');
     }
     next();
   } catch (err) {

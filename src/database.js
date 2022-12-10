@@ -10,7 +10,7 @@ const connect = async () => {
   connection = mongoose.connection;
 
   connection.once('open', () => {
-    console.log('Connection successfully');
+    console.log('Connected with DB successfully');
   });
 
   connection.on('disconnected', () => {

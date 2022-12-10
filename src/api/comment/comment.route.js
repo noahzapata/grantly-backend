@@ -6,6 +6,6 @@ router.post('/:productId', auth, create);
 router.get('/', list);
 router.get('/:commentId', show);
 router.put('/:commentId', update);
-router.get('/destroy/:commentId', destroy);
+router.delete('/destroy/:commentId', destroy);
 
 module.exports = router;

@@ -42,6 +42,7 @@ const signUpHandler = async (req, res) => {
 
 const signInHandler = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
   try {
     const user = await signIn(email);
     if (!user) {
@@ -55,7 +56,9 @@ const signInHandler = async (req, res) => {
       expiresIn: 60 * 60 * 24,
     });
 
-    return res.status(200).json({ message: 'Login successfully', data: token });
+    return res
+      .status(200)
+      .json({ message: 'Login successfully', data: { token } });
   } catch (error) {
     return res
       .status(400)

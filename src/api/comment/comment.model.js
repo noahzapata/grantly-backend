@@ -5,18 +5,13 @@ const commentSchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: false,
+      required: true,
     },
     description: {
       type: String,
       require: true,
     },
     product: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true,
-    },
-    comment: {
       type: Schema.Types.ObjectId,
       ref: 'Product',
       required: true,

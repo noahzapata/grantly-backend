@@ -1,5 +1,5 @@
 const User = require('../user/user.model');
-const jwt = require('jsonwebtoken');
+
 const {
   createCart,
   getCart,
@@ -7,17 +7,17 @@ const {
   updateCart,
   deleteCart,
 } = require('./cart.service');
-// const Product = require('../product/product.model')
+const { transporter, checkout } = require('../../utils/mailer');
 
 const create = async (req, res) => {
   try {
-    const { cartData, token } = req.body;
-    const { id } = jwt.verify(token, process.env.SECRET_KEY);
+    const cartData = req.body;
+    const id = req.user;
     const user = await User.findById(id);
     if (!user) {
       throw new Error('The user does not exist');
     }
-    const cart = await createCart(cartData, id);
+    const cart = await createCart({ ...cartData, user: id });
     user.shppingHistory.push(cart);
     await user.save({ validateBeforeSave: false });
     return res.status(201).json({ message: 'cart created', data: cart });
@@ -64,10 +64,13 @@ const show = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const cartData = req.body;
-  const { cartId } = req.params;
   try {
+    const cartData = req.body;
+    const id = req.user;
+    const user = await User.findById(id);
+    const { cartId } = req.params;
     const cart = await updateCart(cartId, cartData);
+    await transporter.sendMail(checkout(user, cart));
     return res.status(200).json({ message: 'cart updated', data: cart });
   } catch (err) {
     return res.status(400).json({ message: 'cart not update', data: err });

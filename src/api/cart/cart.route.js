@@ -5,7 +5,7 @@ const { auth } = require('../../utils/auth');
 router.post('/', auth, create);
 router.get('/', list);
 router.get('/:cartId', show);
-router.put('/:cartId', update);
+router.put('update/:cartId', auth, update);
 router.get('/destroy/:cartId', destroy);
 
 module.exports = router;

@@ -1,6 +1,3 @@
-const jwt = require('jsonwebtoken');
-const User = require('../user/user.model');
-
 const {
   createProduct,
   allProducts,
@@ -8,17 +5,17 @@ const {
   updateProduct,
   deleteProduct,
 } = require('./product.service');
+const User = require('../user/user.model');
 
 const create = async (req, res) => {
   try {
-    const { productData, token } = req.body;
-    const { id } = jwt.verify(token, process.env.SECRET_KEY);
-    const user = await User.findById(id);
-    if (!user) {
-      throw new Error('The user does not exist');
-    }
+    const productData = req.body;
+    const id = req.user;
 
-    const product = await createProduct(productData);
+    const user = await User.findById(id);
+    const product = await createProduct({ ...productData, user: id });
+    user.products.push(product);
+    await user.save({ validateBeforeSave: false });
     return res.status(200).json({ message: 'Pruduct created', data: product });
   } catch (err) {
     return res
