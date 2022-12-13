@@ -83,7 +83,9 @@ async function show(req, res) {
     const user = await oneUser(userId);
     return res.status(200).json({ message: 'User found', data: user });
   } catch (err) {
-    return res.status(400).json({ message: 'User not found', data: err });
+    return res
+      .status(400)
+      .json({ message: 'User not found', data: err.message });
   }
 }
 

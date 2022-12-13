@@ -60,7 +60,7 @@ const userSchema = new Schema(
       type: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
       required: false,
     },
-    shppingHistory: {
+    shoppingHistory: {
       type: [{ type: Schema.Types.ObjectId, ref: 'Cart' }],
       required: false,
     },
