@@ -5,9 +5,9 @@ const routesConfig = require('./routes.config');
 const expressConfig = require('./express');
 const { transporter, verify } = require('./utils/mailer');
 
-const port = process.env.PORT || 8090;
+const port = process.env.PORT;
 const app = express();
-const NODE_ENV = process.env.NODE_ENV || 'development';
+// const NODE_ENV = process.env.NODE_ENV || 'development';
 
 app.listen(port, () => {
   expressConfig(app);
@@ -15,7 +15,7 @@ app.listen(port, () => {
   routesConfig(app);
   verify(transporter);
 
-  console.log(`listening on http://localhost:${port} in ${NODE_ENV}`);
+  console.log(`listening on http://localhost:${port}`);
 });
 
 module.exports = app;
