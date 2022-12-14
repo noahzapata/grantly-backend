@@ -5,7 +5,7 @@ let connection;
 const connect = async () => {
   if (connection) return;
 
-  const mongoUri = process.env.MONGO_URI;
+  const mongoUri = `${process.env.MONGO_URI}`;
 
   connection = mongoose.connection;
 
