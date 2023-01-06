@@ -13,6 +13,7 @@ const listOfUsers = () => {
 };
 const oneUser = (id) => {
   return User.findById(id).populate({
+    select: '-_id -password',
     path: 'products',
   });
 };
