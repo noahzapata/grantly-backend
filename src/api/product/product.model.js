@@ -29,11 +29,11 @@ const productSchema = new Schema(
     },
     details: {
       type: Object,
-      required: false,
+      required: true,
     },
     tags: {
       type: [String],
-      required: true,
+      required: false,
     },
     discount: {
       type: Number,
