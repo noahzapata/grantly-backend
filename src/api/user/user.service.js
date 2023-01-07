@@ -21,9 +21,7 @@ const deleteUser = (id) => {
 };
 
 const findProducts = (email) => {
-  return User.findOne({ email }).populate([
-    { path: 'products', select: '-id' },
-  ]);
+  return User.findOne({ email }).populate([{ path: 'products' }]);
 };
 
 const findFavs = (email) => {
