@@ -13,7 +13,7 @@ const listOfUsers = () => {
 };
 const oneUser = (id) => {
   return User.findById(id).populate({
-    select: '-_id',
+    path: 'products',
   });
 };
 const deleteUser = (id) => {
