@@ -5,7 +5,7 @@ const createProduct = async (productData) => {
 };
 
 const allProducts = async () => {
-  return Product.find({});
+  return Product.find();
 };
 
 const findProduct = (productId) => {
